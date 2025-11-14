@@ -29,7 +29,7 @@ Do **NOT** include deleting items or out-of-stock features.
 ---
 
 ## Sample Output
-
+<img width="276" height="747" alt="Image" src="https://github.com/user-attachments/assets/dc476e4e-ad62-4eab-932b-e891a4491ea8" />
 
 
 ---
