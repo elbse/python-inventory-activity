@@ -1,42 +1,66 @@
-print("======INVENTORY MENU======")
+print("====== INVENTORY MENU ======")
+
+
+item_names = []         
+item_prices = {}        
 
 while True:
     print("\nSelect an option:")
     print("[1] Add Item")
     print("[2] Update Price")
-    print("[3] Exit" )
+    print("[3] Exit")
 
-    choice = input("Enter your choice:")
+    choice = input("Enter your choice: ")
 
+   
+    try:
+        if choice not in ['1', '2', '3']:
+            raise ValueError("Invalid menu option.")
+    except ValueError as e:
+        print(e)
+        continue
+
+    
     if choice == '1':
-        item_name = input("Enter item name: ")
-        item_price = input("Enter item price: ")
-        with open("inventory.txt", "a") as file:
-            file.write(f"{item_name},{item_price}\n")
+        item_name = input("Enter item name: ").strip()
+
+      
+        if item_name in item_names:
+            print(f"Error: '{item_name}' already exists in inventory.")
+            continue
+
+        
+        try:
+            item_price = float(input("Enter item price: "))
+        except ValueError:
+            print("Invalid price. Please enter a number.")
+            continue
+
+       
+        item_names.append(item_name)
+        item_prices[item_name] = item_price
+
         print(f"Item '{item_name}' added with price {item_price}.")
 
+ 
     elif choice == '2':
-        item_name = input("Enter item name to update: ")
-        new_price = input("Enter new price: ")
-        updated = False
+        item_name = input("Enter item name to update: ").strip()
 
-        with open("inventory.txt", "r") as file:
-            lines = file.readlines()
+        if item_name not in item_names:
+            print(f"Error: Item '{item_name}' does not exist.")
+            continue
 
-        with open("inventory.txt", "w") as file:
-            for line in lines:
-                name, price = line.strip().split(',')
-                if name == item_name:
-                    file.write(f"{name},{new_price}\n")
-                    updated = True
-                    print(f"Price for '{item_name}' updated to {new_price}.")
-                else:
-                    file.write(line)
+        
+        try:
+            new_price = float(input("Enter new price: "))
+        except ValueError:
+            print("Invalid price. Please enter a number.")
+            continue
 
-        if not updated:
-            print(f"Item '{item_name}' not found in inventory.")
+        item_prices[item_name] = new_price
+        print(f"Price for '{item_name}' updated to {new_price}.")
 
+  
     elif choice == '3':
         print("Exiting Inventory Menu.")
         break
-    
